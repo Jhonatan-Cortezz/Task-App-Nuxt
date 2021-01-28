@@ -9,7 +9,7 @@
       <li v-for="(item, index) in tareas" :key="index">
         {{item.id}} - 
         {{item.nombre}}
-        <b-button class="btn-sm btn-warning">Editar</b-button>
+        <b-button class="btn-sm btn-warning" :to="`/vuex/${item.id}`">Editar</b-button>
         <b-button class="btn-sm btn-danger" @click="eliminarTarea(item)">Borrar</b-button>
         <hr>
       </li>

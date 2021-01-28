@@ -2,7 +2,8 @@ import { db } from '@/plugins/firebase.js'
 import { Date } from 'core-js'
 
 export const state = () => ({
-  tareas: ''
+  tareas: '',
+  tarea: ''
 })
 
 export const mutations = {
@@ -17,6 +18,15 @@ export const mutations = {
   DELETE_TAREA(state, payload){
     const index = state.tareas.findIndex(item => item.id === payload.id)
     state.tareas.splice(index, 1)
+  },
+
+  UPDATE_TAREA(state, payload){
+    const index = state.tareas.findIndex(item => item.id === payload.id)
+    state.tareas[index].nombre = payload.nombre
+  },
+
+  SET_ONE_TASK(state, payload){
+    state.tarea = payload
   }
 }
 
@@ -59,5 +69,20 @@ export const actions = {
     }).catch(function(error) {
       console.error("Error removing document: ", error);
     });
+  },
+
+  editarTarea({commit}, payload){
+    db.collection('tareas').doc(payload.id).update({
+      nombre: payload.nombre
+    })
+    .then(() => {
+      console.log('Tarea editada')
+      commit('UPDATE_TAREA', payload)
+      this.app.router.push('/vuex')
+    })
+    .catch(error => {
+      console.log(error);
+    })
   }
+
 }
