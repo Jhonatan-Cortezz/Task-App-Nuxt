@@ -10,7 +10,7 @@
         {{item.id}} - 
         {{item.nombre}}
         <b-button class="btn-sm btn-warning">Editar</b-button>
-        <b-button class="btn-sm btn-danger">Borrar</b-button>
+        <b-button class="btn-sm btn-danger" @click="eliminarTarea(item)">Borrar</b-button>
         <hr>
       </li>
     </ul>
@@ -21,29 +21,12 @@
 import { db } from '@/plugins/firebase'
 import { mapState, mapActions } from 'vuex'
 export default {
-  // fetch({store}){
-  //   return db.collection('tareas').get()
-
-  //     .then(query => {
-
-  //       const tareas = []
-
-  //       query.forEach(element => {
-  //         tareas.push(element.data())
-  //       })
-
-  //       return store.commit('SET_TAREAS', tareas)
-  //     })
-  //     .catch(error => {
-  //       console.log("Error getting documents", error)
-  //     })
-  // }
   computed: {
     ...mapState(['tareas'])    
   },
 
   methods: {
-    ...mapActions(['agregarTarea']),
+    ...mapActions(['agregarTarea', 'eliminarTarea']),
 
     name() {
       

@@ -12,6 +12,11 @@ export const mutations = {
 
   SET_TAREA(state, payload){
     state.tareas.push(payload)
+  },
+
+  DELETE_TAREA(state, payload){
+    const index = state.tareas.findIndex(item => item.id === payload.id)
+    state.tareas.splice(index, 1)
   }
 }
 
@@ -45,5 +50,14 @@ export const actions = {
     } catch (error) {
       console.log(error);
     }
+  },
+
+  eliminarTarea({commit}, payload){
+    db.collection("tareas").doc(payload.id).delete().then(function() {
+      console.log("Document successfully deleted!");
+      commit('DELETE_TAREA', payload)
+    }).catch(function(error) {
+      console.error("Error removing document: ", error);
+    });
   }
 }
